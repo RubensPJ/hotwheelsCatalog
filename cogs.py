@@ -1,10 +1,10 @@
-
 import subprocess
 import configs
 import logging
 import pandas as pd
 import re
 import writer
+import showme
 
 
 # Dependencies
@@ -31,12 +31,15 @@ class MySpider(scrapy.Spider):
         pattern = configs.ONLY_IMAGES_URLS_PATERN
         matches = re.findall(pattern, crawler_table.get())
 
-        matches = [configs.SUFIX_IMG_PATH + m for m in matches if configs.WRONG_IMG_PATERN not in m]
+        images = [configs.SUFIX_IMG_PATH + m for m in matches if configs.WRONG_IMG_PATERN not in m]
 
-        processed_table[0]['Photo'] = matches
+        processed_table[0]['Photo'] = images
 
         # Writes data from the matches list on a csv 
         writer.to_csv(matches, "lambos.csv")
+
+        # showing the images all together
+        showme.images_side_by_side(images)
                 
 
 # Scrapy header config 
@@ -53,3 +56,4 @@ process.crawl(MySpider)
 
 # Executing the fun
 process.start()
+
