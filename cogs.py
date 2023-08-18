@@ -3,9 +3,11 @@ import configs
 import logging
 import pandas as pd
 import re
+
+# local modules
 import writer
 import showme
-
+import htmlMng
 
 # Dependencies
 subprocess.check_call(["pip", "install", "-r", "requirements.txt", "--quiet"])
@@ -38,8 +40,13 @@ class MySpider(scrapy.Spider):
         # Writes data from the matches list on a csv 
         writer.to_csv(matches, "lambos.csv")
 
+        # Sending images to the html page
+        htmlMng.htmlInsert(images, "album-content")
+
         # showing the images all together
-        showme.images_side_by_side(images)
+        # showme.images_side_by_side(images)
+
+        
                 
 
 # Scrapy header config 
