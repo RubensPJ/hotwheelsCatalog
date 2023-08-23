@@ -57,7 +57,7 @@ class MySpider(scrapy.Spider):
             ) 
        
         
-        # print(cars)
+        print(cars)
 
         # Get data from the car_model table first column 
         # titulos_colunas = car_models.iloc[:,0].tolist()

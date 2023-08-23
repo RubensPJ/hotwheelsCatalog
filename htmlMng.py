@@ -1,4 +1,5 @@
 from bs4 import BeautifulSoup
+from time import sleep
 
 
 def htmlInsert(
@@ -86,19 +87,24 @@ def table_list(ext_table_keys:object, call_table_links:object):
             ext_table_keys = ext_table_keys[:-diference]
 
         raise ValueError("Lists don't have the same length!")
-    print(ext_table_keys, call_table_links)
-
-    # for title, link in zip( ext_table_keys, call_table_links ):
-    #     try :
-    #         if pd.isnull(title) or pd.isnull(link):
-    #             raise ValueError("Null or empty values occured")
+    
+    # print(ext_table_keys, call_table_links)
+    # print(call_table_links.values.tolist())
+    car_names_list = ext_table_keys.values.tolist()
+    for index, car_link in enumerate(call_table_links.values.tolist()):
+        try :
+           
+            print(f"Searching in link: {car_link}")
+            tables = pd.read_html(car_link[0])
             
-    #         # print(f"title: {title}\nlink: {link}")
-    #         # df = pd.read_html(link)[0]
-    #         print(title)
-    #         # ext_tables[title]=df
 
-    #     except Exception as e:
-    #         raise ValueError('Erro ao ler tabela',e,'\n','Tabelas não encontradas.')
+            sleep(1)
+
+            ext_tables[ car_names_list[index] ] = tables[2]
+
+        except Exception as e:
+            raise ValueError('Erro ao ler tabela',e,'\n','Tabelas não encontradas.')
         
-    # return ext_tables
+    return ext_tables
+
+
