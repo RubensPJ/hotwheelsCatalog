@@ -20,7 +20,7 @@ from scrapy.crawler import CrawlerProcess
 
 # Crawler Classe
 class MySpider(scrapy.Spider):
-
+    
     name = 'hotwheels-list'
     start_urls = [configs.MAINSITE]
 
@@ -28,23 +28,55 @@ class MySpider(scrapy.Spider):
     def parse(self, response):
 
         crawler_table = response.css(configs.MAINGTABLE_CSS_CLASS)
-        processed_table = pd.read_html(configs.MAINSITE)
+        car_models = pd.read_html(configs.MAINSITE)
 
+        # Finding right image tags
         pattern = configs.ONLY_IMAGES_URLS_PATERN
         matches = re.findall(pattern, crawler_table.get())
 
+        # clearing the wrong images from the matches
         images = [configs.SUFIX_IMG_PATH + m for m in matches if configs.WRONG_IMG_PATERN not in m]
+        
+        # Getting links from model pages in table
+        img_lnks = []
+        img_lnks = htmlMng.get_pages_list(configs.MAINSITE)
+        # print(img_lnks)
+        
+        # Dumping the data into the dataframe
+        car_models[0]['Photo'] = images
+        car_models[0]['Links'] = img_lnks
 
-        processed_table[0]['Photo'] = images
+        # print(car_models[0])
+        new_links_df = pd.DataFrame([ configs.WIKIPATH + links for links in car_models[0]['Links'] ])
+
+        # Creates an object called cars {'model':['car_model_1_dataFrame']} passing dataFrame with names and an altered dataFrame with 
+        # the initial http main url. 
+        cars = htmlMng.table_list(
+            car_models[0]['Name'], 
+            new_links_df
+            ) 
+       
+        
+        # print(cars)
+
+        # Get data from the car_model table first column 
+        # titulos_colunas = car_models.iloc[:,0].tolist()
+
+
+        # sub_models = pd.DataFrame()
 
         # Writes data from the matches list on a csv 
-        writer.to_csv(matches, "lambos.csv")
+        images.insert(0, "Images")
+        writer.to_csv(images,configs.LAMBOS_CSV_PATH)
+        
+        writer.to_csv_next_column(configs.LAMBOS_CSV_PATH, img_lnks, "Links")
 
         # Sending images to the html page
-        htmlMng.htmlInsert(images, "album-content")
+        # htmlMng.htmlInsert(images, "album-content")
 
         # showing the images all together
         # showme.images_side_by_side(images)
+
 
         
                 

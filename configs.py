@@ -1,9 +1,11 @@
 
 # paths
 MAINSITE = 'https://hotwheels.fandom.com/wiki/Lamborghini'
+LAMBOS_CSV_PATH = "lambos.csv"
+# main site to scrape from (must be wiki)
+WIKIPATH = 'https://hotwheels.fandom.com'
 MAINGTABLE_CSS_CLASS = ".wikitable"
 IMGS_CSS_PATH = "table a"
-NAMESLIST_HREF = "/wiki/Lamborghini_Countach"
 SUBTABLE_CLASS = "wikitable sortable article-table jquery-tablesorter"
 DADOS_TABELA = {'date':1,'name':3, 'img':13}
 SUFIX_IMG_PATH = "https://static.wikia.nocookie.net/hotwheels/images/"
