@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: cogs.py",
+            "name": "Python: spider.py",
             "type": "python",
             "request": "launch",
-            "program": "cogs.py",
+            "program": "spider.py",
             "console": "integratedTerminal",
             "justMyCode": true
         }

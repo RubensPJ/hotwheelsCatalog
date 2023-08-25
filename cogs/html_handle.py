@@ -98,7 +98,7 @@ def table_list(ext_table_keys:object, call_table_links:object):
             tables = pd.read_html(car_link[0])
             
 
-            sleep(1)
+            # sleep(1)
 
             ext_tables[ car_names_list[index] ] = tables[2]
 
