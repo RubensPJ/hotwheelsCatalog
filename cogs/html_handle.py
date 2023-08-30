@@ -103,7 +103,7 @@ def table_list(ext_table_keys:object, call_table_links:object):
             ext_tables[ car_names_list[index] ] = tables[2]
 
         except Exception as e:
-            raise ValueError('Erro ao ler tabela',e,'\n','Tabelas não encontradas.')
+            raise ValueError('Error while reading table',e,'\n','Table not found.')
         
     return ext_tables
 
