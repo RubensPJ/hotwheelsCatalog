@@ -20,7 +20,6 @@ logging.getLogger( 'scrapy' ).propagate = False
 car_name_input = google.match_car_name( input( "| Type the car name: ") )
 
 URL = spider_configs.MAINSITE.format( car= car_name_input )
-print( URL )
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
@@ -46,8 +45,6 @@ class MySpider( scrapy.Spider ):
 
     # Parse function to collect data and store it on a csv
     def parse( self, response ):
-
-        print(  self.crawler.settings.get( "start_urls" )[0]  )
         
         start_urls = self.crawler.settings.get( "start_urls" )[0]
         

@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from time import sleep
 from pandas import DataFrame
+from async_processing import process_links_async
 
 def htmlInsert( 
             obj_list:list,
@@ -103,20 +104,14 @@ def table_list( ext_table_keys:DataFrame, call_table_links:DataFrame ):
     
     # print( ext_table_keys, call_table_links )
     # print( call_table_links.values.tolist(  ) )
-    car_names_list = ext_table_keys.values.tolist(  )
-    for index, car_link in enumerate( call_table_links.values.tolist(  ) ):
-        try :
-           
-            print( f"Searching in link: {car_link}" )
-            tables = pd.read_html( car_link[0] )
-            
+    car_names_list = ext_table_keys.values.tolist()
+    call_table_links_list = call_table_links.values.tolist()
 
-            # sleep( 1 )
+    results = process_links_async(call_table_links_list, car_names_list)
 
-            ext_tables[ car_names_list[index] ] = tables[2]
+    for car_name, table in results:
+        ext_tables[car_name] = table
 
-        except Exception as e:
-            raise ValueError( 'Error while reading table',e,'\n','Table not found.' )
         
     return ext_tables
 
