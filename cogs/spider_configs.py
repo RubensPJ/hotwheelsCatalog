@@ -4,12 +4,14 @@ DATA_PATH = "../data/"
 CARS_CSV_PATH = "mainCars.csv"
 DETAILED_CARS_CSV_PATH = "models.csv"
 DATETIME_EXEC_PATH = "datetime_exec_control_file.txt"
+CAR_MANUFACTURES = "car_names_dumped_file.csv"
 # pickle dataframe files
 
 
 # main site to scrape from (must be wiki)
 MAINSITE = 'https://hotwheels.fandom.com/wiki/{car}'
 WIKIPATH = 'https://hotwheels.fandom.com'
+CAR_MANUFACTURES_WEBLIST = "https://raw.githubusercontent.com/WebTheoryMedia-Steve/car-manufacturers/main/Car%20Manufacturers.txt"
 MAINGTABLE_CSS_CLASS = ".wikitable"
 IMGS_CSS_PATH = "table a"
 SUBTABLE_CLASS = "wikitable sortable article-table jquery-tablesorter"
