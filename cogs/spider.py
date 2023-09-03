@@ -2,12 +2,14 @@ import subprocess
 import logging
 import pandas as pd
 import re
+from collections import OrderedDict
 
 # local modules
 import writer
 import spider_configs
+from customized_print import *
 # import showme
-import html_handle
+import html_handler
 import time_controler as runtime
 import search_engine as google
 
@@ -20,17 +22,10 @@ logging.getLogger( 'scrapy' ).propagate = False
 car_name_input = google.match_car_name( input( "| Type the car name: ") )
 
 URL = spider_configs.MAINSITE.format( car= car_name_input )
+print( URL )
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
-
-# My own print
-def printit( *args ):
-    print( "|-===================================================-" )
-    print( "|" )
-    
-    print( f"| { ''.join( str( i ) for i in args ) }" )
-    print( "|" )
 
 # Crawler Classe
 class MySpider( scrapy.Spider ):
@@ -45,6 +40,8 @@ class MySpider( scrapy.Spider ):
 
     # Parse function to collect data and store it on a csv
     def parse( self, response ):
+
+        printit(  self.crawler.settings.get( "start_urls" )[0]  )
         
         start_urls = self.crawler.settings.get( "start_urls" )[0]
         
@@ -52,32 +49,51 @@ class MySpider( scrapy.Spider ):
         
         # import pdb; pdb.set_trace(  )
 
-        crawler_table = response.css( spider_configs.MAINGTABLE_CSS_CLASS )
         car_models = pd.read_html( start_urls )
 
+        selector = spider_configs.IMAGE_SELECTOR
+
         # Finding right image tags
-        pattern = spider_configs.ONLY_IMAGES_URLS_PATERN
-        matches = re.findall( pattern, crawler_table.get(  ) )
+        # crawler_table = response.css( spider_configs.MAINGTABLE_CSS_CLASS )
+        # pattern = spider_configs.ONLY_IMAGES_URLS_PATERN
+        # matches = re.findall( pattern, crawler_table.get(  ) )
 
         # clearing the wrong images from the matches
-        images = [spider_configs.SUFIX_IMG_PATH + m for m in matches if spider_configs.WRONG_IMG_PATERN not in m]
-        # print( images )
+        # images = [spider_configs.SUFIX_IMG_PATH + m for m in matches if spider_configs.WRONG_IMG_PATERN not in m]
+        
+        # 'first_href' agora contém o valor 'href' do primeiro elemento correspondente
+        # Selector for all rows in the table
+        rows = response.css('.wikitable tbody tr')
+
+        # Initialize a list to store the links of the second <a> element in each row
+        images = []
+
+        # Iterate through the table rows
+        for row in rows[1:]:
+            # Select the second <a> element in each row and extract the 'href'
+            link = row.css('td:nth-child(4) a::attr(href)').get()
+            if link:
+                images.append(link)
+
+        printit( images )
+
+        # import pdb; pdb.set_trace()
         # Getting links from model pages in table
-        img_lnks = []
-        img_lnks = html_handle.get_pages_list( start_urls )
-        # print( img_lnks )
+        img_links = []
+        img_links = html_handler.get_pages_list( start_urls )
+        # print( img_links )
         
 
         # Dumping the data into the dataframe
         car_models[0]['Photo'] = images
-        car_models[0]['Links'] = img_lnks
+        car_models[0]['Links'] = img_links
 
         # print( car_models[0] )
         new_links_df = pd.DataFrame( [ spider_configs.WIKIPATH + links for links in car_models[0]['Links'] ] )
 
         # Creates an object called cars {'model':['car_model_1_dataFrame']} passing dataFrame with names and an altered dataFrame with 
         # the initial http main url. 
-        cars = html_handle.table_list( 
+        cars = html_handler.table_list( 
             car_models[0]['Name'], 
             new_links_df
              ) 
@@ -90,7 +106,7 @@ class MySpider( scrapy.Spider ):
 
         # Output/logging the total amount of each model
         for car, value in cars.items(  ):
-            printit(  car, ": ", value.shape[0]  )
+            printit(  car+ ": "+ str(value.shape[0])  )
 
 
         printit( f"Total cars found: {total_searched_cars}" )
@@ -100,7 +116,7 @@ class MySpider( scrapy.Spider ):
         writer.to_csv( images,spider_configs.CARS_CSV_PATH )
         
         # adds a column to the cars main table with the image links captured
-        writer.to_csv_next_column( spider_configs.CARS_CSV_PATH, img_lnks, "Links" )
+        writer.to_csv_next_column( spider_configs.CARS_CSV_PATH, img_links, "Links" )
 
         # writing a csv with the main tables
         writer.to_csv( cars.items(  ),spider_configs.DETAILED_CARS_CSV_PATH )
