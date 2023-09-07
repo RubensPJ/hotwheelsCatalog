@@ -1,4 +1,4 @@
- # Hot Wheels - Lamborghini - Data Scraping
+ # Hot Wheels - collection - Data Scraping
 
 How it's working right now:
 
