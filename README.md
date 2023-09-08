@@ -1,4 +1,9 @@
- # Hot Wheels - Lamborghini - Data Scraping
+ # Hot Wheels - collection - Data Scraping
+
+How it's working right now:
+
+![Code_axvQr4O02R](https://github.com/RubensPJ/hotwheelsCatalog/assets/20057755/f6358f32-1615-4961-9735-fda7c51f414a)
+
 
 This repository contains the code necessary to scrape data from the Hot Wheels Lamborghini wiki page. The code is written in Python and uses the following libraries:
 
