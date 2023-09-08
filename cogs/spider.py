@@ -1,3 +1,6 @@
+# Yeshua
+import warnings
+warnings.filterwarnings("ignore")
 import subprocess
 import logging
 import pandas as pd
@@ -8,16 +11,19 @@ from collections import OrderedDict
 import writer
 import spider_configs
 from customized_print import *
-# import showme
+import showme
 import html_handler
 import time_controler as runtime
 import search_engine as google
+
+
 
 # Dependencies
 subprocess.check_call( ["pip", "install", "-r", "../requirements.txt", "--quiet"] )
 
 # Stop the log on scrapy
 logging.getLogger( 'scrapy' ).propagate = False
+
 
 car_name_input = google.match_car_name( input( "| Type the car name: ") )
 
@@ -53,15 +59,6 @@ class MySpider( scrapy.Spider ):
 
         selector = spider_configs.IMAGE_SELECTOR
 
-        # Finding right image tags
-        # crawler_table = response.css( spider_configs.MAINGTABLE_CSS_CLASS )
-        # pattern = spider_configs.ONLY_IMAGES_URLS_PATERN
-        # matches = re.findall( pattern, crawler_table.get(  ) )
-
-        # clearing the wrong images from the matches
-        # images = [spider_configs.SUFIX_IMG_PATH + m for m in matches if spider_configs.WRONG_IMG_PATERN not in m]
-        
-        # 'first_href' agora contém o valor 'href' do primeiro elemento correspondente
         # Selector for all rows in the table
         rows = response.css('.wikitable tbody tr')
 
@@ -97,8 +94,6 @@ class MySpider( scrapy.Spider ):
             car_models[0]['Name'], 
             new_links_df
              ) 
-    
-        # print( cars )
 
         # Counting the total of cars captured ( Sum of all of the rows in the dataframes )
         total_searched_cars = sum(  car.shape[0] for car in cars.values(  )  )
@@ -120,20 +115,12 @@ class MySpider( scrapy.Spider ):
 
         # writing a csv with the main tables
         writer.to_csv( cars.items(  ),spider_configs.DETAILED_CARS_CSV_PATH )
-
-        # Trying to write a pickle dataframe file with the merged dataFrames
         
         # Sending images to the html page
         # htmlMng.htmlInsert( images, "album-content" )
 
         # showing the images all together
-        # showme.images_side_by_side( images )
-
-
-
-
-        
-                
+        showme.images_side_by_side( images )
 
 # Scrapy header config 
 settings = {

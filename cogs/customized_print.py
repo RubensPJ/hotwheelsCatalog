@@ -13,5 +13,7 @@ def printit(*args):
             print("| Lista:")
             for item in arg:
                 print(f"|   {item}")
+        else:
+            print(f"| {arg}")
    
 
