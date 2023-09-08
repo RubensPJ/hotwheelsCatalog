@@ -1,6 +1,6 @@
  # Hot Wheels - Collection - Data Scraping
 
-How it's working right now: (Still somethings to improve, but it's getting there)
+How it's working right now: (There are things to improve, but it's getting there)
 
 ![fullscreen](https://github.com/RubensPJ/hotwheelsCatalog/assets/20057755/b32fc1e6-9f6e-4985-beb0-3d085292b3ca)
 
