@@ -57,7 +57,7 @@ class MySpider( scrapy.Spider ):
 
         car_models = pd.read_html( start_urls )
 
-        selector = spider_configs.IMAGE_SELECTOR
+        # selector = spider_configs.IMAGE_SELECTOR
 
         # Selector for all rows in the table
         rows = response.css('.wikitable tbody tr')

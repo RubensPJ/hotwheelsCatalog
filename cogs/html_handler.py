@@ -83,27 +83,25 @@ def table_list( ext_table_keys:DataFrame, call_table_links:DataFrame ):
     ext_table_keys : dataFrame that contains keys to extract from each table
     call_table_links : dataFrame of urls where the tables are located
     """
-    import pandas as pd
+    # import pandas as pd
 
     ext_tables={}
 
-    # print( [i for i in zip (  ext_table_keys, call_table_links  )] )
-    # print( f"Len_Names: {len( ext_table_keys )} || Len_call: {len( call_table_links )} \ntable: {ext_table_keys} \nLinks: {call_table_links}" )
-    # return 0
+    
     len_tb_keys = len( ext_table_keys )
     len_tb_links = len( call_table_links )
 
+    # import pdb; pdb.set_trace()
+
     # Checks if the lists are equal and if not, trimms the end of the biggest one for the later used zip(  ) to work
     if len_tb_keys != len_tb_links:
-        diference = abs(  len_tb_keys - len_tb_links  )
-
+        
         if len_tb_keys > len_tb_links:
+            diference = abs(  len_tb_keys - len_tb_links  )
             ext_table_keys = ext_table_keys[:-diference]
 
         raise ValueError( "Lists don't have the same length!" )
     
-    # print( ext_table_keys, call_table_links )
-    # print( call_table_links.values.tolist(  ) )
     car_names_list = ext_table_keys.values.tolist()
     call_table_links_list = call_table_links.values.tolist()
 

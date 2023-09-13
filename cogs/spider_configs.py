@@ -1,7 +1,7 @@
 
 # paths
 DATA_PATH = "../data/"
-CARS_CSV_PATH = "mainCars.csv"
+CARS_CSV_PATH = "manufacture.csv"
 DETAILED_CARS_CSV_PATH = "models.csv"
 DATETIME_EXEC_PATH = "datetime_exec_control_file.txt"
 CAR_MANUFACTURES = "car_names_dumped_file.csv"
