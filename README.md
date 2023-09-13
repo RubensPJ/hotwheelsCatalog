@@ -1,11 +1,38 @@
- # Hot Wheels - collection - Data Scraping
+ # Hot Wheels - Collection - Data Scraping
 
-How it's working right now:
+How it's working right now: (There are things to improve, but it's getting there)
 
-![Code_axvQr4O02R](https://github.com/RubensPJ/hotwheelsCatalog/assets/20057755/f6358f32-1615-4961-9735-fda7c51f414a)
+![fullscreen](https://github.com/RubensPJ/hotwheelsCatalog/assets/20057755/b32fc1e6-9f6e-4985-beb0-3d085292b3ca)
 
+### Features:
+This Python application is designed to collect data from Hot Wheels car thumbnails and offers the following functionalities:
 
-This repository contains the code necessary to scrape data from the Hot Wheels Lamborghini wiki page. The code is written in Python and uses the following libraries:
+### Thumbnail Download:
+
+Download Hot Wheels car thumbnails directly from the website.
+
+### Table Data Collection:
+
+The application allows you to input the desired car brand name via the terminal.
+It collects data from the tables related to the specified car brand on the website.
+
+### Display Data in Tables:
+
+After data collection, the application presents the collected data in a tabular format, making it easy to read.
+
+### Export to CSV File:
+
+The collected data can be exported to a CSV file for further analysis or use in other applications.\
+
+### Image Link Collection:
+
+In addition to table data, the application also collects links to images related to car thumbnails.
+
+### Temporary Image Viewing:
+
+The application temporarily displays the collected images in a window for quick preview.
+
+### Tecs
 
 * `scrapy`: A library for scraping web pages.
 * `pandas`: A library for data analysis and manipulation.
