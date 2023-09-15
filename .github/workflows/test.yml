@@ -1,4 +1,4 @@
-name: Test
+name: PR
 
 on:
   push:
@@ -10,12 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: caching-requirements
-        uses: actions/cache@v3
+      - name: Caching Requirements
+        uses: actions/cache@v2
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}-${{ github.run_id }}
-          restore-keys: ${{ runner.os }}-pip-
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('requirements.txt') }}
+
+        # uses: actions/cache@v3
+        # with:
+        #   path: ~/.cache/pip
+        #   key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}-${{ github.run_id }}
+        #   restore-keys: ${{ runner.os }}-pip-
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,6 +32,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.8.18
+          run: 
             
       - name: Run tests
         run: pytest
