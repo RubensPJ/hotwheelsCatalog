@@ -43,8 +43,11 @@ jobs:
 
       - name: Fixing Dependencies
         run: python -m pip install -e .
+        working-directory: /home/runner/work/hotwheelsCatalog/hotwheelsCatalog
+
       - name: Build
         run: make
+        
       - name: Test
         run: make test
 
