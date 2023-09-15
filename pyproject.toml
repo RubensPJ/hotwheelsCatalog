@@ -229,6 +229,3 @@ version = "2.3.7"
 
 [tool.poetry.dependencies.zipp]
 version = "3.16.2"
-
-[tool.poetry.dependencies.zope.interface]
-version = "6.0"
