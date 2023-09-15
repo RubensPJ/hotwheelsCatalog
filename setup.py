@@ -6,7 +6,6 @@ setup(
     description='A Webscraping Python project that search can search cars miniatures in an specific forum',
     author='Junior',
     author_email='rb_jp@hotmail.com',
-    packages=['hotwheelsCatalog'],
     install_requires=[
         'attrs',
         'Automat',
