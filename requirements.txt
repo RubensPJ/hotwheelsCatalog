@@ -63,10 +63,6 @@ soupsieve==2.4.1
 tldextract==3.4.2
 tomli==2.0.1
 Twisted==22.10.0
-twisted-iocpsupport==1.0.3
-# Se estiver em um sistema Linux, exclua a dependência twisted-iocpsupport
-platform_system != 'Windows' or twisted-iocpsupport==1.0
-
 typing_extensions==4.5.0
 tzdata==2023.3
 urllib3==2.0.2
