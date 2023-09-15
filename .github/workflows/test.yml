@@ -18,6 +18,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Install libc-dev (workaround libc-dev support)
+        run: |
+          sudo apt-get update
+          sudo apt-get install libc-dev
+      
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
