@@ -10,13 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: caching-requirements
-        uses: actions/cache@v2
+      - uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          key: Linux-pip-
+          restore-keys: Linux-pip-
 
       - name: Checkout code
         uses: actions/checkout@v2
