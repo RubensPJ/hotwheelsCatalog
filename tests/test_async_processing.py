@@ -8,7 +8,7 @@ from async_processing import *
 @pytest.fixture
 def sample_data():
 
-    call_table_links_list = ['https://hotwheels.fandom.com/wiki/Lamborghini_Countach', 'https://hotwheels.fandom.com/wiki/Lamborghini_Countach']
+    call_table_links_list = [['https://hotwheels.fandom.com/wiki/Lamborghini_Countach'], ['https://hotwheels.fandom.com/wiki/Lamborghini_Countach']]
     car_names_list = ['Countach', 'Countach']
     return call_table_links_list, car_names_list
 
