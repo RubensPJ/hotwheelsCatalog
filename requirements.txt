@@ -60,6 +60,7 @@ Scrapy==2.9.0
 service-identity==21.1.0
 six==1.16.0
 soupsieve==2.4.1
+tldextract==3.4.2
 tomli==2.0.1
 typing_extensions==4.5.0
 tzdata==2023.3
