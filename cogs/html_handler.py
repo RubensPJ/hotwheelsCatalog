@@ -63,8 +63,13 @@ def get_pages_list( url:str ):
     response = requests.get( url )
     soup = BeautifulSoup( response.content, "html.parser" )
 
+    # Seleciona todas as <tr> excluindo o cabeçalho pela classe certa
     table = soup.find( "table", class_="wikitable" )
-    rows = table.select( "tr" )[1:]  # Seleciona todas as <tr> excluindo o cabeçalho
+    if table == None:
+        rows = soup.find("table", class_="fandom-table").select( "tr" )[1:]
+    else:
+        rows = table.select( "tr" )[1:]  
+    
     link_text = []
 
     for row in rows:

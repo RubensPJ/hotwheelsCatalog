@@ -28,6 +28,7 @@ share/python-wheels/
 MANIFEST
 .ipynb_checkpoints/
 *.ipynb
+*.pkl
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -35,7 +36,7 @@ MANIFEST
 *.manifest
 *.spec
 
-# Installer logs
+# Installer logs and general logs
 pip-log.txt
 pip-delete-this-directory.txt
 
