@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Yeshua
 import warnings
 warnings.filterwarnings("ignore")
@@ -16,7 +17,6 @@ import html_handler
 import time_controler as runtime
 import search_engine as google
 
-
 # Dependencies
 subprocess.check_call( ["pip", "install", "-r", "../requirements.txt", "--quiet"] )
 
@@ -25,6 +25,7 @@ logging.getLogger( 'scrapy' ).propagate = False
 
 car_name_input = google.match_car_name( input( "| Type the car name: ") )
 
+# Capturing the car name for practical testing before I build the website that will use a search textbox 
 URL = spider_configs.MAINSITE.format( car= car_name_input )
 print( URL )
 
@@ -50,16 +51,22 @@ class MySpider( scrapy.Spider ):
         start_urls = self.crawler.settings.get( "start_urls" )[0]
         
         printit( f"Searching over {start_urls}" )
-        
-        # import pdb; pdb.set_trace(  )
 
-        car_models = pd.read_html( start_urls )
+        # decode downloaded html into utf-8
+        content_type = response.headers.get('Content-Type', b'').decode('utf-8')
+
+        if 'text/html' in content_type:
+           html_content = response.body.decode('utf-8')
+
+
+        car_models = pd.read_html( html_content )
 
         # selector = spider_configs.IMAGE_SELECTOR
 
         # Selector for all rows in the table
         rows = response.css('.wikitable tbody tr')
-
+        if len(rows) == 0:
+            rows = response.css('.fandom-table  tbody tr')
         # Initialize a list to store the links of the second <a> element in each row
         images = []
 

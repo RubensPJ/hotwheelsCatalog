@@ -30,6 +30,7 @@ share/python-wheels/
 MANIFEST
 .ipynb_checkpoints/
 *.ipynb
+*.pkl
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -37,7 +38,6 @@ MANIFEST
 *.manifest
 *.spec
 spider_catalog/
-# Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
