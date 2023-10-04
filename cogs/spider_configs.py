@@ -18,6 +18,7 @@ WRONG_IMG_PATERN = "scale-to-width-down"
 MAINSITE = 'https://hotwheels.fandom.com/wiki/{car}'
 WIKIPATH = 'https://hotwheels.fandom.com'
 CAR_MANUFACTURES_WEBLIST = "https://raw.githubusercontent.com/RubensPJ/data/main/hotwheels_car_manufactures"
+
 DADOS_TABELA = {'date':1,'name':3, 'img':13}
 SUFIX_IMG_PATH = "https://static.wikia.nocookie.net/hotwheels/images/"
 

@@ -35,7 +35,8 @@ def match_car_name( car_name ):
         matched_car_name = best_match
     else:
         weblist_data = requests.get( sconfig.CAR_MANUFACTURES_WEBLIST ).json()
-        matched_car_name = weblist_data[0]["name"]
+        print(f"\nActual payload: {weblist_data}")
+        matched_car_name = weblist_data
         df = df.append({"car_name": matched_car_name}, ignore_index=True)
         df.to_pickle(FILE_PATH)
 
