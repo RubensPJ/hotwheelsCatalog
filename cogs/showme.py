@@ -4,6 +4,29 @@ from math import sqrt, ceil
 from io import BytesIO
 from PIL import Image
 import threading
+import logging
+
+# Configurar um arquivo de log para as mensagens de depuração do matplotlib
+matplotlib_logger = logging.getLogger('matplotlib')
+matplotlib_logger.setLevel(logging.ERROR)  # Define o nível de log para DEBUG ou outro nível desejado
+log_handler = logging.FileHandler('matplotlib_debug.log')  # Nome do arquivo de log
+log_handler.setFormatter(logging.Formatter('%(asctime)s [%(name)s] %(levelname)s: %(message)s'))
+matplotlib_logger.addHandler(log_handler)
+
+# Repita o mesmo processo para o Pillow (PIL)
+pillow_logger = logging.getLogger('PIL')
+pillow_logger.setLevel(logging.ERROR)
+pillow_log_handler = logging.FileHandler('pillow_debug.log')
+pillow_log_handler.setFormatter(logging.Formatter('%(asctime)s [%(name)s] %(levelname)s: %(message)s'))
+pillow_logger.addHandler(pillow_log_handler)
+
+import logging
+import urllib3
+
+# Desativar os logs de depuração do urllib3
+urllib3_logger = logging.getLogger('urllib3')
+urllib3_logger.setLevel(logging.ERROR)  # Define o nível de log para ERROR ou outro nível desejado
+
 
 def download_image(link:str, image_list:list, index:int):
     """

@@ -1,6 +1,28 @@
 import threading
 import pandas as pd
 import queue
+import logging
+import urllib3
+
+# Configurar um arquivo de log para as mensagens de depuração do matplotlib
+matplotlib_logger = logging.getLogger('matplotlib')
+matplotlib_logger.setLevel(logging.ERROR)  # Define o nível de log para DEBUG ou outro nível desejado
+log_handler = logging.FileHandler('matplotlib_debug.log')  # Nome do arquivo de log
+log_handler.setFormatter(logging.Formatter('%(asctime)s [%(name)s] %(levelname)s: %(message)s'))
+matplotlib_logger.addHandler(log_handler)
+
+# Repita o mesmo processo para o Pillow (PIL)
+pillow_logger = logging.getLogger('PIL')
+pillow_logger.setLevel(logging.ERROR)
+pillow_log_handler = logging.FileHandler('pillow_debug.log')
+pillow_log_handler.setFormatter(logging.Formatter('%(asctime)s [%(name)s] %(levelname)s: %(message)s'))
+pillow_logger.addHandler(pillow_log_handler)
+# Desativar os logs de depuração do urllib3
+urllib3_logger = logging.getLogger('urllib3')
+urllib3_logger.setLevel(logging.ERROR)  # Define o nível de log para ERROR ou outro nível desejado
+
+
+# Resto do seu código aqui
 
 def process_link(index, car_link, result_queue, car_names_list):
     try:

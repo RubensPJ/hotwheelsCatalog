@@ -66,7 +66,7 @@ setup(
         'queuelib',
         'requests',
         'requests-file',
-        'Scrapy',
+        'Scrapy>=2.9.0',
         'service-identity',
         'six',
         'soupsieve',

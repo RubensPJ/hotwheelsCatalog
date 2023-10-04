@@ -17,13 +17,11 @@ import time_controler as runtime
 import search_engine as google
 
 
-
 # Dependencies
 subprocess.check_call( ["pip", "install", "-r", "../requirements.txt", "--quiet"] )
 
 # Stop the log on scrapy
 logging.getLogger( 'scrapy' ).propagate = False
-
 
 car_name_input = google.match_car_name( input( "| Type the car name: ") )
 

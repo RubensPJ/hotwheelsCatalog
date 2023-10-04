@@ -12,7 +12,7 @@ IMAGE_SELECTOR = "#mw-content-text > div > table > tbody > tr > td > a"
 # main site to scrape from (must be wiki)
 MAINSITE = 'https://hotwheels.fandom.com/wiki/{car}'
 WIKIPATH = 'https://hotwheels.fandom.com'
-CAR_MANUFACTURES_WEBLIST = "https://raw.githubusercontent.com/WebTheoryMedia-Steve/car-manufacturers/main/Car%20Manufacturers.txt"
+CAR_MANUFACTURES_WEBLIST = "https://raw.githubusercontent.com/RubensPJ/data/main/hotwheels_car_manufactures"
 MAINGTABLE_CSS_CLASS = ".wikitable"
 IMGS_CSS_CLASS = ".image" # document.getElementsByClassName('image').length
 IMGS_CSS_PATH = "table a"

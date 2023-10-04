@@ -3,6 +3,8 @@ __pycache__
 __pycache__/
 *.py[cod]
 *$py.class
+.gitignore
+*.csv
 
 # C extensions
 *.so
@@ -34,7 +36,7 @@ MANIFEST
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
-
+spider_catalog/
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
