@@ -110,6 +110,7 @@ def table_list( ext_table_keys:DataFrame, call_table_links:DataFrame ):
     for car_name, table in results:
         ext_tables[car_name] = table
 
+    print(f"A fill vars to be checked: \ncar_names_list: {car_names_list} \ncall_table_links_list: {call_table_links_list} \nlen_tb_keys: {len_tb_keys} \nlen_tb_links: {len_tb_links} \next_tables: {ext_tables}")
         
     return ext_tables
 

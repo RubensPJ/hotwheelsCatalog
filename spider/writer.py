@@ -6,6 +6,7 @@ def check_if_file_empty():
 		sconfig.CARS_CSV_PATH, 
 		sconfig.DETAILED_CARS_CSV_PATH, 
 		sconfig.DATETIME_EXEC_PATH]
+	
 	for file in filenames:
 		fullpath_file = sconfig.DATA_PATH+file
 
@@ -47,7 +48,7 @@ def to_csv_next_column(
       title:str, 
       clear_repeats=False):
 	"""open an already existent csv file and put a list_to_write
-   in the next column with the new column title recieved by the function caller"""
+   	in the next column with the new column title recieved by the function caller"""
 	import pandas as pd
 
 	csv_file = sconfig.DATA_PATH + csv_file

@@ -5,7 +5,7 @@ import subprocess
 import logging
 import pandas as pd
 import re
-from collections import OrderedDict
+# from collections import OrderedDictlambo
 
 # local modules
 import writer
@@ -18,7 +18,7 @@ import search_engine as google
 
 
 # Dependencies
-subprocess.check_call( ["pip", "install", "-r", "../requirements.txt", "--quiet"] )
+# subprocess.check_call( ["pip", "install", "-r", "../requirements.txt", "--quiet"] )
 
 # Stop the log on scrapy
 logging.getLogger( 'scrapy' ).propagate = False
@@ -34,9 +34,9 @@ from scrapy.crawler import CrawlerProcess
 # Crawler Classe
 class MySpider( scrapy.Spider ):
 
-    name = 'hotwheels-list'
+    name = 'hotwheels_list'
     # car_name = input( "| Type the car name: " )
-    # start_urls =  [spider_configs.MAINSITE.format( car= car_name  )]
+    start_urls =  [spider_configs.MAINSITE.format( car= car_name_input  )]
 
     def start_requests( self ):
         yield scrapy.Request(  url=URL, callback=self.parse  )
@@ -45,8 +45,10 @@ class MySpider( scrapy.Spider ):
     # Parse function to collect data and store it on a csv
     def parse( self, response ):
 
-        printit(  self.crawler.settings.get( "start_urls" )[0]  )
+        # printit(  self.crawler.settings.get( "start_urls" )  )
         
+        # start_urls = self.crawler.settings.get( "start_urls" )[0]
+
         start_urls = self.crawler.settings.get( "start_urls" )[0]
         
         printit( f"Searching over {start_urls}" )
@@ -119,6 +121,9 @@ class MySpider( scrapy.Spider ):
 
         # showing the images all together
         showme.images_side_by_side( images )
+
+
+# if '__name__' == '__main__':
 
 # Scrapy header config 
 settings = {

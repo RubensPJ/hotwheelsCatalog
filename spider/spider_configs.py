@@ -1,6 +1,6 @@
 
 # paths
-DATA_PATH = "../data/"
+DATA_PATH = "data/"
 CARS_CSV_PATH = "manufacture.csv"
 DETAILED_CARS_CSV_PATH = "models.csv"
 DATETIME_EXEC_PATH = "datetime_exec_control_file.txt"

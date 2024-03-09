@@ -22,13 +22,25 @@ urllib3_logger = logging.getLogger('urllib3')
 urllib3_logger.setLevel(logging.ERROR)  # Define o nível de log para ERROR ou outro nível desejado
 
 
-# Resto do seu código aqui
-
 def process_link(index, car_link, result_queue, car_names_list):
     try:
         print(f"Searching in link: {car_link[0]}")
         tables = pd.read_html(car_link[0])
-        result_queue.put((car_names_list[index], tables[2]))
+        
+        # Supondo que você esteja procurando por uma tabela com um cabeçalho específico
+        desired_header = ["Col #", "Year", "Color"]  # Exemplo de cabeçalhos esperados
+        
+        # Loop para verificar cada tabela
+        for table in tables:
+            if all(header in table.columns for header in desired_header):
+                
+                # Se a tabela contém todos os cabeçalhos desejados, coloque no result_queue
+                result_queue.put((car_names_list[index], table))
+                break
+        else:
+            # Se o loop terminar sem encontrar a tabela, levante uma exceção ou imprima uma mensagem
+            raise ValueError("Tabela desejada não encontrada.")
+    
     except Exception as e:
         print(f'Error while reading table: {e}\nTable not found.')
 

@@ -1,0 +1,42 @@
+name: PR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install libc-dev (workaround libc-dev support)
+        run: |
+          sudo apt-get update
+          sudo apt-get install libc-dev
+      - name: Install libffi-dev
+        run: sudo apt-get update && sudo apt-get install -y libffi-dev
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9.x'
+
+
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-${{ hashFiles('setup.py') }}-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Installing Dependencies
+        run: python -m pip install -r requirements.txt
+        working-directory: /home/runner/work/hotwheelsCatalog/hotwheelsCatalog
+            
+      - name: Run tests
+        run: pytest
