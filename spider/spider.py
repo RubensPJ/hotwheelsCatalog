@@ -26,7 +26,7 @@ logging.getLogger( 'scrapy' ).propagate = False
 car_name_input = google.match_car_name( input( "| Type the car name: ") )
 
 URL = spider_configs.MAINSITE.format( car= car_name_input )
-print( URL )
+printit( URL )
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
@@ -120,7 +120,7 @@ class MySpider( scrapy.Spider ):
         # htmlMng.htmlInsert( images, "album-content" )
 
         # showing the images all together
-        showme.images_side_by_side( images )
+        # showme.images_side_by_side( images )
 
 
 # if '__name__' == '__main__':

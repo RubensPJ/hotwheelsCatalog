@@ -45,7 +45,7 @@ def download_image(link:str, image_list:list, index:int):
     except Exception as e:
         print(f"Error processing link {link}: {e}")
 
-def images_side_by_side(image_links):
+def images_side_by_side(image_links:list):
     """
     Downloads and displays images in an automatically determined layout using matplotlib.
 

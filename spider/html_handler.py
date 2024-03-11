@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from time import sleep
 from pandas import DataFrame
-from async_processing import process_links_async
+from async_processing import get_imgs_from_htmltable, process_links_async
 
 def htmlInsert( 
             obj_list:list,
@@ -86,7 +86,6 @@ def table_list( ext_table_keys:DataFrame, call_table_links:DataFrame ):
     # import pandas as pd
 
     ext_tables={}
-
     
     len_tb_keys = len( ext_table_keys )
     len_tb_links = len( call_table_links )
@@ -104,13 +103,16 @@ def table_list( ext_table_keys:DataFrame, call_table_links:DataFrame ):
     
     car_names_list = ext_table_keys.values.tolist()
     call_table_links_list = call_table_links.values.tolist()
+    print(call_table_links_list)
+    
+    get_imgs_from_htmltable( call_table_links_list )
 
     results = process_links_async(call_table_links_list, car_names_list)
 
     for car_name, table in results:
         ext_tables[car_name] = table
 
-    print(f"A fill vars to be checked: \ncar_names_list: {car_names_list} \ncall_table_links_list: {call_table_links_list} \nlen_tb_keys: {len_tb_keys} \nlen_tb_links: {len_tb_links} \next_tables: {ext_tables}")
+    # print(f"A fill vars to be checked:\nResults: {results} \ncar_names_list: {car_names_list} \ncall_table_links_list: {call_table_links_list} \nlen_tb_keys: {len_tb_keys} \nlen_tb_links: {len_tb_links} \next_tables: {ext_tables}")
         
     return ext_tables
 
