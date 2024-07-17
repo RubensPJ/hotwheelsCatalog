@@ -17,56 +17,52 @@ import html_handler
 import time_controler as runtime
 import search_engine as google
 
+import sys
+from twisted.internet import selectreactor
+
+# Use SelectReactor para evitar problemas com AsyncioSelectorReactor
+selectreactor.install()
+
 # Dependencies
-subprocess.check_call( ["pip", "install", "-r", "../requirements.txt", "--quiet"] )
+subprocess.check_call(["pip", "install", "-r", "../requirements.txt", "--quiet"])
 
 # Stop the log on scrapy
-logging.getLogger( 'scrapy' ).propagate = False
+logging.getLogger('scrapy').propagate = False
 
-car_name_input = google.match_car_name( input( "| Type the car name: ") )
+car_name_input = google.match_car_name(input("| Type the car name: "))
 
 # Capturing the car name for practical testing before I build the website that will use a search textbox 
-URL = spider_configs.MAINSITE.format( car= car_name_input )
-print( URL )
+URL = spider_configs.MAINSITE.format(car=car_name_input)
+print(URL)
 
 import scrapy
 from scrapy.crawler import CrawlerProcess
 
 # Crawler Classe
-class MySpider( scrapy.Spider ):
+class MySpider(scrapy.Spider):
 
     name = 'hotwheels-list'
-    # car_name = input( "| Type the car name: " )
-    # start_urls =  [spider_configs.MAINSITE.format( car= car_name  )]
 
-    def start_requests( self ):
-        yield scrapy.Request(  url=URL, callback=self.parse  )
-
+    def start_requests(self):
+        yield scrapy.Request(url=URL, callback=self.parse)
 
     # Parse function to collect data and store it on a csv
-    def parse( self, response ):
-
-        printit(  self.crawler.settings.get( "start_urls" )[0]  )
-        
-        start_urls = self.crawler.settings.get( "start_urls" )[0]
-        
-        printit( f"Searching over {start_urls}" )
+    def parse(self, response):
+        printit(self.crawler.settings.get("start_urls")[0])
+        start_urls = self.crawler.settings.get("start_urls")[0]
+        printit(f"Searching over {start_urls}")
 
         # decode downloaded html into utf-8
         content_type = response.headers.get('Content-Type', b'').decode('utf-8')
-
         if 'text/html' in content_type:
-           html_content = response.body.decode('utf-8')
+            html_content = response.body.decode('utf-8')
 
-
-        car_models = pd.read_html( html_content )
-
-        # selector = spider_configs.IMAGE_SELECTOR
+        car_models = pd.read_html(html_content)
 
         # Selector for all rows in the table
         rows = response.css('.wikitable tbody tr')
         if len(rows) == 0:
-            rows = response.css('.fandom-table  tbody tr')
+            rows = response.css('.fandom-table tbody tr')
         # Initialize a list to store the links of the second <a> element in each row
         images = []
 
@@ -77,70 +73,62 @@ class MySpider( scrapy.Spider ):
             if link:
                 images.append(link)
 
-        printit( images )
+        printit(images)
 
-        # import pdb; pdb.set_trace()
         # Getting links from model pages in table
-        img_links = []
-        img_links = html_handler.get_pages_list( start_urls )
-        # print( img_links )
+        img_links = html_handler.get_pages_list(start_urls)
         
+        
+        for table in img_links:
+            html_handler.get_pages_list(table)
 
         # Dumping the data into the dataframe
         car_models[0]['Photo'] = images
         car_models[0]['Links'] = img_links
 
-        # print( car_models[0] )
-        new_links_df = pd.DataFrame( [ spider_configs.WIKIPATH + links for links in car_models[0]['Links'] ] )
+        new_links_df = pd.DataFrame([spider_configs.WIKIPATH + links for links in car_models[0]['Links']])
 
         # Creates an object called cars {'model':['car_model_1_dataFrame']} passing dataFrame with names and an altered dataFrame with 
         # the initial http main url. 
-        cars = html_handler.table_list( 
-            car_models[0]['Name'], 
-            new_links_df
-             ) 
+        cars = html_handler. in _list(car_models[0]['Name'], new_links_df) 
 
         # Counting the total of cars captured ( Sum of all of the rows in the dataframes )
-        total_searched_cars = sum(  car.shape[0] for car in cars.values(  )  )
-        
+        total_searched_cars = sum(car.shape[0] for car in cars.values())
 
         # Output/logging the total amount of each model
-        for car, value in cars.items(  ):
-            printit(  car+ ": "+ str(value.shape[0])  )
+        for car, value in cars.items():
+            printit(car + ": " + str(value.shape[0]))
 
-
-        printit( f"Total cars found: {total_searched_cars}" )
+        printit(f"Total cars found: {total_searched_cars}")
 
         # Writes data from the matches list on a csv 
-        images.insert( 0, "Images" )
-        writer.to_csv( images,spider_configs.CARS_CSV_PATH )
+        images.insert(0, "Images")
+        writer.to_csv(images, spider_configs.CARS_CSV_PATH)
         
         # adds a column to the cars main table with the image links captured
-        writer.to_csv_next_column( spider_configs.CARS_CSV_PATH, img_links, "Links" )
+        writer.to_csv_next_column(spider_configs.CARS_CSV_PATH, img_links, "Links")
 
         # writing a csv with the main tables
-        writer.to_csv( cars.items(  ),spider_configs.DETAILED_CARS_CSV_PATH )
-        
+        writer.to_csv(cars.items(), spider_configs.DETAILED_CARS_CSV_PATH)
+
         # Sending images to the html page
-        # htmlMng.htmlInsert( images, "album-content" )
+        # html_handler.htmlInsert(images, "album-content")
 
         # showing the images all together
-        showme.images_side_by_side( images )
+        showme.images_side_by_side(images)
 
 # Scrapy header config 
 settings = {
-    'USER_AGENT': 'Mozilla/5.0 ( Windows NT 10.0; Win64; x64 ) AppleWebKit/537.36 ( KHTML, like Gecko ) Chrome/94.0.4606.81 Safari/537.36'
+    'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36'
 }
 
 # initialization
-process = CrawlerProcess( settings={
+process = CrawlerProcess(settings={
     "start_urls": [URL]
-} )
-
+})
 
 # Adding spider to the process
-process.crawl( MySpider )
+process.crawl(MySpider)
 
 # Executing the fun
-process.start(  )
-
+process.start()

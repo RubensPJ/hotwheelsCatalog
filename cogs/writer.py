@@ -1,11 +1,13 @@
 import os, csv
 import spider_configs as sconfig
+import pandas as pd
 
 def check_if_file_empty():
 	filenames = [
 		sconfig.CARS_CSV_PATH, 
 		sconfig.DETAILED_CARS_CSV_PATH, 
 		sconfig.DATETIME_EXEC_PATH]
+
 	for file in filenames:
 		fullpath_file = sconfig.DATA_PATH+file
 
@@ -13,7 +15,6 @@ def check_if_file_empty():
 		if not os.path.exists(fullpath_file):
 			with open(fullpath_file, "w") as f:
 				pass
-
 
 			return True
 
@@ -42,13 +43,14 @@ def to_csv(list_to_write:list, filename:str):
 			writer.writerow([line])
 
 def to_csv_next_column(
-      csv_file:str, 
-      list_to_write:list, 
-      title:str, 
-      clear_repeats=False):
+	csv_file:str, 
+	list_to_write:list, 
+	title:str, 
+	clear_repeats=False):
+	
 	"""open an already existent csv file and put a list_to_write
-   in the next column with the new column title recieved by the function caller"""
-	import pandas as pd
+	in the next column with the new column title recieved by the function caller"""
+
 
 	csv_file = sconfig.DATA_PATH + csv_file
 
@@ -66,5 +68,3 @@ def to_csv_next_column(
 
 	# Save updated data back in the csv file
 	df.to_csv(csv_file, index=False)
-
-   

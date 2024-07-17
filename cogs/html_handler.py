@@ -95,18 +95,20 @@ def table_list( ext_table_keys:DataFrame, call_table_links:DataFrame ):
     
     len_tb_keys = len( ext_table_keys )
     len_tb_links = len( call_table_links )
+    
+    # print(f"len_tb_links {len_tb_links} | len_tb_keys {len_tb_keys}")
 
     # import pdb; pdb.set_trace()
 
     # Checks if the lists are equal and if not, trimms the end of the biggest one for the later used zip(  ) to work
     if len_tb_keys != len_tb_links:
-        
+
         if len_tb_keys > len_tb_links:
             diference = abs(  len_tb_keys - len_tb_links  )
             ext_table_keys = ext_table_keys[:-diference]
 
         raise ValueError( "Lists don't have the same length!" )
-    
+
     car_names_list = ext_table_keys.values.tolist()
     call_table_links_list = call_table_links.values.tolist()
 

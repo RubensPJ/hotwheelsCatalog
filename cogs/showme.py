@@ -34,6 +34,8 @@ def download_image(link:str, image_list:list, index:int):
     :param list[Image] image_list: List where we will append downloaded image
     :param int index: Index in the list that this thread is working on
     """
+    
+    # print(f"link {link} | image_list {image_list} | index {index}")
     try:
         response = requests.get(link)
         if response.status_code == 200:
